@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ['Eric Mueller']
   s.email       = 'emueller@emcien.com'
   s.files       = [
+    "README.md",
     "lib/shatter.rb",
     "lib/shatter/connection_handler.rb",
     "lib/shatter/ar_extensions.rb"
