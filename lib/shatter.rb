@@ -1,0 +1,2 @@
+module Shatter
+end
