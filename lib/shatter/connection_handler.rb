@@ -4,8 +4,6 @@ module Shatter
       if klass.shattered?
         if Thread.current[:shard_connection].present?
           return Thread.current[:shard_connection]
-        else
-          raise "Sharding requested, but no sharded connection found"
         end
       end
 
