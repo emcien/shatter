@@ -4,26 +4,16 @@ Shatter is a database sharding tool, but not the kind you're used to.
 
 ### Motivation
 
-Our application often consist of some business-level data, and then a set of 'reports',
-compiled relational data, sizable in scope. Dozens of tables, with thousands or millions
-of records in each for a single report.
-
-Those reports create a natural sharding strategy for conventional database sharding,
-where each report is allocated to some shard - this would essentially solve any
-database scaling problems we might run into.. But our problems are not with database
-power or reponse-time. Our unusual problems can instead be solved by treating each
-report as a 'document' filled with relational data.
-
-These documents can be sqlite3 databases, or separate dbs in our db server,
-but they are in separate databases of some kind. ActiveRecord has facilities to allow
-different models to use different connection-pools, what they call 'vertical sharding',
-but no good way to have different *instances* of some models use different connections.
+We desire (and the reasons for our desires are complex) to have large sets of associated,
+self-contained, immutable relational data confined to separate databases. We may have any
+number of these piles (let's call them 'reports'), and we'd like to use ActiveRecord
+to interact with them as usual, rather than rewrite several projects with a new ORM.
 
 ### Implementation
 
-Shatter uses a thread-local variable to store a connection to the shard. You indicate
-which objects should be sharded, and you provide overall logic to select a shard for
-those objects (usually an around-filter in your ApplicationController).
+Shatter uses a thread-local variable to store a connection to the current shard.
+You indicate which objects should be sharded, and you provide overall logic to select
+a shard for those objects (usually an around-filter in your ApplicationController).
 
 Shatter hooks into the `ActiveRecord::Base.connection_handler` singleton, patching
 the `retrieve_connection` method to check the class for `shattered?`, and use
