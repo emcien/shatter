@@ -33,6 +33,10 @@ module Shatter
       Thread.current[:shard_connection] = nil
     end
   end
+
+  def self.connection
+    Thread.current[:shard_connection] || nil
+  end
 end
 
 if Object.const_defined?("ActiveRecord")
