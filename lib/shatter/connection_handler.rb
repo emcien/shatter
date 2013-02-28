@@ -1,7 +1,7 @@
 module Shatter
   module ConnectionHandler
     def retrieve_connection(klass)
-      if klass.sharded?
+      if klass.shattered?
         if Thread.current[:shard_connection].present?
           puts "Using sharded connection"
           return Thread.current[:shard_connection]
