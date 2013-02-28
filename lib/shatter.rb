@@ -33,11 +33,11 @@ module Shatter
 end
 
 if Object.const_defined?("ActiveRecord")
-  ActiveRecord::ConnectionAdapters::ConnectionHandler.send :include, Shatter::ConnectionHandler
-
-  # but it's a singleton, and it's generally already been instantiated, so...
+  # it's a singleton, and it's generally already been instantiated, so we need to extend the instance.
   ActiveRecord::Base.connection_handler.send :extend, Shatter::ConnectionHandler
 
+  # This is probably unnecessary, but I don't know under what circumstances that instance might be re-created
+  ActiveRecord::ConnectionAdapters::ConnectionHandler.send :include, Shatter::ConnectionHandler
 
   ActiveRecord::Base.send :class_attribute, :uses_sharding
   ActiveRecord::Base.send :extend, Shatter::ArExtensions
