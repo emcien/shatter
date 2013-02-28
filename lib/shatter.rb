@@ -11,7 +11,10 @@ module Shatter
     end
 
     adapter_method = nil
-    if config.respond_to? :has_key?
+    if config.nil?
+      config = ActiveRecord::Base.connection_config
+      adapter_method = config[:adapter].to_s + "_connection"
+    elsif config.respond_to? :has_key?
       adapter_method = config[:adapter].to_s + "_connection"
     else
       db_name = config
