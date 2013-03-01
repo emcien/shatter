@@ -3,11 +3,18 @@ require 'shatter/ar_extensions'
 
 module Shatter
   def self.using_shard(config, &block)
+    self.set_shard!(config)
+    begin
+      yield
+    ensure
+      self.close_shard!
+    end
+  end
 
-    # shouldn't be one, but if there is, disconnect it.
-    if conn = Thread.current[:shard_connection]
+  def self.set_shard!(config)
+    if conn = self.connection
       conn.disconnect!
-      Thread.current[:shard_connection] = nil
+      self.connection = nil
     end
 
     adapter_method = nil
@@ -24,18 +31,20 @@ module Shatter
     end
 
     conn = ActiveRecord::Base.send(adapter_method, config)
-    Thread.current[:shard_connection] = conn
+    self.connection = conn
+  end
 
-    begin
-      yield
-    ensure
-      conn.disconnect!
-      Thread.current[:shard_connection] = nil
-    end
+  def self.close_shard!
+    conn.disconnect!
+    self.connection = nil
   end
 
   def self.connection
     Thread.current[:shard_connection] || nil
+  end
+
+  def self.connection=(val)
+    Thread.current[:shard_connection] = val
   end
 end
 
