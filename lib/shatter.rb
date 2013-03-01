@@ -35,8 +35,10 @@ module Shatter
   end
 
   def self.close_shard!
-    conn.disconnect!
-    self.connection = nil
+    if self.connection
+      self.connection.disconnect!
+      self.connection = nil
+    end
   end
 
   def self.connection
