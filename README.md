@@ -1,5 +1,7 @@
 # Shatter
 
+[![Code Climate](https://codeclimate.com/github/emcien/shatter.png)](https://codeclimate.com/github/emcien/shatter)
+
 Shatter is a database sharding tool, but not the kind you're used to.
 
 ### Motivation
