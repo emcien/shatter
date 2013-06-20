@@ -19,7 +19,7 @@ module Shatter
 
     adapter_method = nil
     if config.nil?
-      config = ActiveRecord::Base.connection_config
+      config = ActiveRecord::Base.connection_config.dup
       adapter_method = config[:adapter].to_s + "_connection"
     elsif config.respond_to? :has_key?
       adapter_method = config[:adapter].to_s + "_connection"
