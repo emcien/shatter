@@ -25,7 +25,7 @@ module Shatter
       adapter_method = config[:adapter].to_s + "_connection"
     else
       db_name = config
-      config = ActiveRecord::Base.connection_config
+      config = ActiveRecord::Base.connection_config.dup
       config[:database] = db_name
       adapter_method = config[:adapter].to_s + "_connection"
     end
