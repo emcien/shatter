@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name        = "shatter"
-  s.version     = '0.1.2'
-  s.date        = '2013-02-27'
+  s.version     = '0.1.3'
+  s.date        = '2017-03-28'
   s.summary     = 'Shatter your DB!'
   s.description = "Database tools for sharding dynamically and at-will"
-  s.authors     = ['Eric Mueller']
-  s.email       = 'emueller@emcien.com'
+  s.authors     = ['Emcien']
+  s.email       = 'engineering@emcien.com'
   s.files       = [
     "README.md",
     "lib/shatter.rb",
@@ -15,5 +15,5 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://github.com/emcien/shatter'
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1")
-  s.add_dependency("activerecord", ["~> 4.2.0"])
+  s.add_dependency("activerecord", ["~> 5.0.2"])
 end
