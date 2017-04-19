@@ -2,8 +2,8 @@ require 'shatter/connection_handler'
 require 'shatter/ar_extensions'
 
 module Shatter
-  def self.using_shard(config, &block)
-    self.set_shard!(config)
+  def self.using_shard(config, parent = nil, &block)
+    self.set_shard!(config, parent)
     begin
       yield
     ensure
@@ -11,7 +11,7 @@ module Shatter
     end
   end
 
-  def self.set_shard!(config)
+  def self.set_shard!(config, parent = nil)
     if conn = self.connection
       conn.disconnect!
       self.connection = nil
@@ -30,6 +30,8 @@ module Shatter
       adapter_method = config[:adapter].to_s + "_connection"
     end
 
+    self.parent = parent unless parent.nil?
+
     conn = ActiveRecord::Base.send(adapter_method, config)
     self.connection = conn
   end
@@ -39,6 +41,15 @@ module Shatter
       self.connection.disconnect!
       self.connection = nil
     end
+    self.parent = nil if self.parent
+  end
+
+  def self.parent
+    Thread.current[:shard_parent] || nil
+  end
+
+  def self.parent=(val)
+    Thread.current[:shard_parent] = val
   end
 
   def self.connection
