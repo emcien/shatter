@@ -5,6 +5,7 @@ module Shatter
     end
 
     def shatter!
+      self.connection_specification_name = self
       self.uses_sharding = true
     end
   end

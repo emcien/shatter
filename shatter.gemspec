@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "shatter"
-  s.version     = '0.1.3'
-  s.date        = '2017-03-28'
+  s.version     = '0.2.0'
+  s.date        = '2017-04-17'
   s.summary     = 'Shatter your DB!'
   s.description = "Database tools for sharding dynamically and at-will"
   s.authors     = ['Emcien']
