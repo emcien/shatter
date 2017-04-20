@@ -8,7 +8,7 @@ module Shatter
       end
 
       pool = retrieve_connection_pool(klass)
-      (pool && pool.connection) or raise ConnectionNotEstablished
+      (pool && pool.connection) or raise ActiveRecord::ConnectionNotEstablished
     end
   end
 end
